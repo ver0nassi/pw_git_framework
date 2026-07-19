@@ -1,16 +1,13 @@
-# This is a sample Python script.
+from framework.browser.browser_manager import BrowserManager
+from framework.pages.loggedout_page import GuestHeaderLinks, GuestPage
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+with BrowserManager() as manager:
+    page = manager.new_page()
+    guest_page = GuestPage(page)
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    guest_page.navigate()
+    guest_page.verify_page_loaded()
+    guest_page.open_header_button_menu(guest_page.platform_button)
+    page.wait_for_timeout(5000)
+    test_list = guest_page.get_all_menu_items_text(guest_page.platform_button)
+    print(test_list)
