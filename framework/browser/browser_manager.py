@@ -1,14 +1,14 @@
 from dataclasses import dataclass, asdict
-from config import BrowserConfig, ContextConfig
+from framework.browser.config import BrowserConfig, ContextConfig
 from playwright.sync_api import sync_playwright, Playwright, Browser, BrowserContext, Page
 
-class PlaywrightBrowserManager:
+class BrowserManager:
     def __init__(self, browser_config: BrowserConfig | None = None):
         self.browser_config = browser_config or BrowserConfig()
         self._playwright: Playwright | None = None
         self._browser: Browser | None = None
 
-    def __enter__(self):
+    def __enter__(self) -> "BrowserManager":
         self._playwright = sync_playwright().start()
 
         browser_type = self.browser_config.browser_type.lower()
@@ -44,8 +44,17 @@ class PlaywrightBrowserManager:
 
         return self._browser.new_context(**clean_context_options)
 
+    def new_page(self, context: BrowserContext | None = None) -> Page:
+        # If the user explicitly provided a context, use it.
+        # Otherwise, fall back to creating a quick, one-off context.
+        target_context = context or self.new_context()
+        return target_context.new_page()
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self._browser:
             self._browser.close()
         if self._playwright:
             self._playwright.stop()
+        # avoids accidental reuse
+        self._browser = None
+        self._playwright = None
