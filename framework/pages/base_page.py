@@ -1,5 +1,5 @@
 from framework.browser.config import BrowserConfig, ContextConfig
-from playwright.sync_api import BrowserContext, Page
+from playwright.sync_api import BrowserContext, Page, Locator
 from framework.browser.browser_manager import BrowserManager
 
 class BasePage:
@@ -20,10 +20,11 @@ class BasePage:
         If no URL is provided, it falls back to the page's default PAGE_PATH.
         """
         target_url = url or f"{self.BASE_URL}{self.PAGE_PATH}"
-        self.page.goto(target_url, wait_until="networkidle")
+        self.page.goto(target_url, wait_until="domcontentloaded")
+        self.wait_loaded()
 
     def reload(self):
-        self.page.reload(wait_until="networkidle")
+        self.page.reload(wait_until="load")
 
     def url(self) -> str:
         return self.page.url
@@ -31,7 +32,10 @@ class BasePage:
     def title(self) -> str:
         return self.page.title()
 
-    def wait_loaded(self):
+    def wait_visible(self, locator: Locator) -> None:
+        locator.wait_for(state="visible")
+
+    def wait_loaded(self) -> None:
         #TODO
         pass
 
