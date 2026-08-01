@@ -1,5 +1,6 @@
 from framework.browser.browser_manager import BrowserManager
-from framework.pages.loggedout_page import GuestHeaderLinks, GuestPage
+from framework.pages.guest_page import GuestPage
+from framework.components.guest_header import GuestHeaderLinks
 
 with BrowserManager() as manager:
     page = manager.new_page()
@@ -7,7 +8,8 @@ with BrowserManager() as manager:
 
     guest_page.navigate()
     guest_page.verify_page_loaded()
-    guest_page.open_header_button_menu(guest_page.platform_button)
+
+    guest_page.header.open_menu(guest_page.header.platform_button)
     page.wait_for_timeout(5000)
-    test_list = guest_page.get_all_menu_items_text(guest_page.platform_button)
+    test_list = guest_page.header.get_dropdown_items_text(guest_page.header.platform_button)
     print(test_list)

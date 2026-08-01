@@ -113,7 +113,8 @@ class GuestHeaderComponent:
     def __init__(self, page: Page) -> None:
         self.page = page
         self._container = page.locator("header")
-        self._global_nav = page.get_by_role.locator(".HeaderMenu-wrapper")
+        # --- Header menu wrapper ---
+        self._global_nav = page.locator(".HeaderMenu-wrapper")
 
         # --- Header Buttons ---
         self.platform_button = self._global_nav.get_by_role("button", name="Platform")
@@ -122,7 +123,6 @@ class GuestHeaderComponent:
         self.open_source_button = self._global_nav.get_by_role("button", name="Open Source")
         self.enterprise_button = self._global_nav.get_by_role("button", name="Enterprise")
         self.pricing_button = self._global_nav.get_by_role("button", name="Pricing")
-        # --- Dropdown
 
         # --- Actions ---
         self.search_trigger_button = page.get_by_role("button", name="Search or jump to…")
@@ -143,7 +143,6 @@ class GuestHeaderComponent:
         dropdown_container = self._get_active_dropdown(menu_button)
         expect(menu_button).to_have_attribute("aria-expanded", "true")
         expect(dropdown_container).to_be_visible()
-
         return dropdown_container
 
     def click_dropdown_link(self, menu_button: Locator, link_item_name: str | Enum) -> None:
@@ -153,8 +152,6 @@ class GuestHeaderComponent:
 
     def get_dropdown_items_text(self, menu_button: Locator) -> list[str]:
         """Parses all drop-down menu items names into a list."""
-        menu_button.hover()
-        controls_id = menu_button.get_attribute("aria-controls")
-        dropdown_container = self.page.locator(f"#{controls_id}")
+        dropdown_container = self._get_active_dropdown(menu_button)
         raw_titles = dropdown_container.get_by_role("link").all_text_contents()
         return [title.replace("New", "").strip() for title in raw_titles if title.strip()]

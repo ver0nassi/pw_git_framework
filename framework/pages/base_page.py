@@ -1,13 +1,21 @@
-from framework.browser.config import BrowserConfig, ContextConfig
-from playwright.sync_api import BrowserContext, Page, Locator
 from framework.browser.browser_manager import BrowserManager
+from framework.browser.config import BrowserConfig, ContextConfig
+from playwright.sync_api import BrowserContext, Page, Locator, expect
+
+from framework.components.guest_header import GuestHeaderComponent
+
 
 class BasePage:
     BASE_URL: str = "https://github.com/"
     PAGE_PATH: str = "/"
+
     def __init__(self, page : Page):
         self.page = page
 
+        # --- Common Global Components ---
+        self.header : GuestHeaderComponent = GuestHeaderComponent(page)
+
+        # --- Base Locators ---
         self.global_search_input = page.locator(".QueryBuilder-InputWrapper").get_by_role("combobox")
         # or alternatively find the combobox that is actively visible on the screen
         # self.global_search_input = page.get_by_role("combobox").locator("visible=true")
@@ -15,10 +23,7 @@ class BasePage:
         self.flash_alert_container = page.locator("#js-flash-container")
 
     def navigate(self, url : str | None = None) -> None:
-        """
-        Navigates to a URL.
-        If no URL is provided, it falls back to the page's default PAGE_PATH.
-        """
+        """Navigates to a URL. If no URL is provided, it falls back to the page's default PAGE_PATH."""
         target_url = url or f"{self.BASE_URL}{self.PAGE_PATH}"
         self.page.goto(target_url, wait_until="domcontentloaded")
         self.wait_loaded()
@@ -43,9 +48,8 @@ class BasePage:
         #TODO
         pass
 
-    def take_screenshot(self):
-        #TODO
-        pass
+    def take_screenshot(self, path: str) -> bytes:
+        return self.page.screenshot(path=path, full_page=True)
 
     def get_context(self) -> BrowserContext:
         return self.page.context
