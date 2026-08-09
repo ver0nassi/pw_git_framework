@@ -1,4 +1,6 @@
 from framework.pages.base_page import BasePage
+from framework.components.guest_header import GuestHeaderComponent
+from framework.components.guest_footer import GuestFooterComponent
 from playwright.sync_api import Page, Locator, expect
 
 from enum import Enum
@@ -7,6 +9,10 @@ class GuestPage(BasePage):
     PAGE_PATH: str = "/"
     def __init__(self, page: Page):
         super().__init__(page)
+
+        # --- Common Global Components ---
+        self.header : GuestHeaderComponent = GuestHeaderComponent(page)
+        self.footer : GuestFooterComponent = GuestFooterComponent(page)
 
         # --- Top banner items ---
         self.hero_heading = page.get_by_role("heading", name="The future of building happens together")
