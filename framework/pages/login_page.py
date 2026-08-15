@@ -1,7 +1,7 @@
 from framework.pages.base_page import BasePage
-from playwright.sync_api import Page, Locator, expect
+from playwright.sync_api import Page, expect
 
-from framework.components.guest_login_footer import GuestLoginFooterComponent
+from framework.components.footer.guest_login_footer import GuestLoginFooterComponent
 from framework.pages.forgot_password_page import ForgotPasswordPage
 
 class LoginPage(BasePage):

@@ -1,5 +1,5 @@
 from playwright.sync_api import BrowserContext, Page, Locator
-from framework.components.flash_alert_component import FlashAlertComponent
+from framework.components.common.flash_alert_component import FlashAlertComponent
 
 
 class BasePage:

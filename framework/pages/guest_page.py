@@ -1,9 +1,8 @@
 from framework.pages.base_page import BasePage
-from framework.components.guest_header import GuestHeaderComponent
-from framework.components.guest_footer import GuestFooterComponent
-from playwright.sync_api import Page, Locator, expect
+from framework.components.header.guest_header import GuestHeaderComponent
+from framework.components.footer.guest_footer import GuestFooterComponent
+from playwright.sync_api import Page, expect
 
-from enum import Enum
 
 class GuestPage(BasePage):
     PAGE_PATH: str = "/"
