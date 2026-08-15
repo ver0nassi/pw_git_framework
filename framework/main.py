@@ -1,6 +1,5 @@
 from framework.browser.browser_manager import BrowserManager
 from framework.pages.guest_page import GuestPage
-from framework.components.guest_header import GuestHeaderLinks
 
 with BrowserManager() as manager:
     page = manager.new_page()

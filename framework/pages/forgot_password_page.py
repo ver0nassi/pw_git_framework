@@ -1,5 +1,5 @@
 from framework.pages.base_page import BasePage
-from framework.components.guest_login_footer import GuestLoginFooterComponent
+from framework.components.footer.guest_login_footer import GuestLoginFooterComponent
 
 from playwright.sync_api import Page
 
