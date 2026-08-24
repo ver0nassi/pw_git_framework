@@ -1,6 +1,8 @@
-from pydantic.dataclasses import dataclass as pydantic_dataclass
-from pydantic import Field
 from typing import Literal
+
+from pydantic import Field
+from pydantic.dataclasses import dataclass as pydantic_dataclass
+
 
 @pydantic_dataclass
 class ViewportSize:

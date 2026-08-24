@@ -1,6 +1,7 @@
 import pytest
-from framework.browser.browser_manager import BrowserManager
 from playwright.sync_api import BrowserContext, Page
+
+from framework.browser.browser_manager import BrowserManager
 from framework.browser.config import BrowserConfig, ContextConfig, ViewportSize
 
 
@@ -20,8 +21,7 @@ def browser_manager() -> BrowserManager:
 @pytest.fixture(scope="function")
 def context(browser_manager: BrowserManager) -> BrowserContext:
     context_config = ContextConfig(
-        viewport = ViewportSize(width=1280, height=720),
-        base_url="https://github.com/"
+        viewport = ViewportSize(width=1280, height=720)
     )
     context = browser_manager.new_context(context_config)
 

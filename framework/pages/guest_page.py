@@ -1,7 +1,8 @@
-from framework.pages.base_page import BasePage
-from framework.components.header.guest_header import GuestHeaderComponent
-from framework.components.footer.guest_footer import GuestFooterComponent
 from playwright.sync_api import Page, expect
+
+from framework.components.footer.guest_footer import GuestFooterComponent
+from framework.components.header.guest_header import GuestHeaderComponent
+from framework.pages.base_page import BasePage
 
 
 class GuestPage(BasePage):
@@ -17,7 +18,8 @@ class GuestPage(BasePage):
         self.hero_heading = page.get_by_role("heading", name="The future of building happens together")
         self.hero_paragraph = page.locator("p[class*='Hero-description']")
         self.hero_email_input = page.locator("#hero_user_email")
-        self.hero_sign_up_button = page.get_by_role("button", name="Sign up for GitHub")
+        self.hero_sign_up_button = page.locator("#hero").get_by_role("button", name="Sign up for GitHub")
+        self.try_git_hub_copilot_link = page.locator("#hero").get_by_role("link", name="Try GitHub Copilot")
 
     def assert_loaded(self) -> None:
         """Verifies that key above-the-fold landing page elements are visible."""

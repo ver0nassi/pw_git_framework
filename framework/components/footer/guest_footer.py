@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import TypeAlias
-from playwright.sync_api import Page, Locator, expect
+
+from playwright.sync_api import Locator, Page, expect
+
 
 # Enums namespace
 class GuestFooterLinks:

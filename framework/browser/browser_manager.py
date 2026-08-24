@@ -1,6 +1,15 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
+
+from playwright.sync_api import (
+    Browser,
+    BrowserContext,
+    Page,
+    Playwright,
+    sync_playwright,
+)
+
 from framework.browser.config import BrowserConfig, ContextConfig
-from playwright.sync_api import sync_playwright, Playwright, Browser, BrowserContext, Page
+
 
 class BrowserManager:
     def __init__(self, browser_config: BrowserConfig | None = None):
