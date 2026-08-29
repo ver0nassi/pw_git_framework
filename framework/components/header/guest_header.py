@@ -1,10 +1,13 @@
 from enum import Enum
-from playwright.sync_api import Page, Locator, expect
+
+from playwright.sync_api import Locator, Page, expect
+
 
 class GuestHeaderLinks:
     """Namespace grouping for the GitHub guest header dropdown menus."""
+
     # --- Platform Dropdown Items ---
-    class Platform(str,Enum):
+    class Platform(str, Enum):
         # --- AI CODE CREATION ---
         COPILOT = "GitHub Copilot"
         COPILOT_APP = "GitHub Copilot app"
@@ -32,7 +35,7 @@ class GuestHeaderLinks:
         VIEW_ALL_FEATURES = "View all features"
 
     # --- Solutions Dropdown Items ---
-    class Solutions(str,Enum):
+    class Solutions(str, Enum):
         # --- BY COMPANY SIZE ---
         ENTERPRISES = "Enterprises"
         SMALL_AND_MEDIUM_TEAMS = "Small and medium teams"
@@ -57,7 +60,7 @@ class GuestHeaderLinks:
         VIEW_ALL_SOLUTIONS = "View all solutions"
 
     # --- Resources Dropdown Items ---
-    class Resources(str,Enum):
+    class Resources(str, Enum):
         # --- EXPLORE BY TOPIC ---
         AI = "AI"
         SOFTWARE_DEVELOPMENT = "Software Development"
@@ -83,7 +86,7 @@ class GuestHeaderLinks:
         VIEW_ALL_RESOURCES = "View all resources"
 
     # --- OpenSource Dropdown Items ---
-    class OpenSource(str,Enum):
+    class OpenSource(str, Enum):
         # --- COMMUNITY ---
         SPONSORS = "GitHub Sponsors"
 
@@ -99,8 +102,8 @@ class GuestHeaderLinks:
         TRENDING = "Trending"
         COLLECTIONS = "Collections"
 
-    # --- OpenSource Dropdown Items ---
-    class Enterprise(str,Enum):
+    # --- Enterprise Dropdown Items ---
+    class Enterprise(str, Enum):
         # --- ENTERPRISE SOLUTIONS ---
         ENTERPRISE_PLATFORM = "Enterprise platform"
 
@@ -114,7 +117,7 @@ class GuestHeaderComponent:
         self.page = page
         self._container = page.locator("header")
         # --- Header menu wrapper ---
-        self._global_nav = page.locator(".HeaderMenu-wrapper")
+        self._global_nav = page.get_by_role("navigation", name="Global")
 
         # --- Header Buttons ---
         self.platform_button = self._global_nav.get_by_role("button", name="Platform")
@@ -125,9 +128,24 @@ class GuestHeaderComponent:
         self.pricing_button = self._global_nav.get_by_role("button", name="Pricing")
 
         # --- Actions ---
-        self.search_trigger_button = page.get_by_role("button", name="Search or jump to…")
+        self.search_trigger_button = page.get_by_role("button", name="Search or jump to")
         self.sign_in_link = page.get_by_role("link", name="Sign in", exact=True)
         self.sign_up_link = page.get_by_role("link", name="Sign up", exact=True)
+
+        self._locator_registry = {
+            "Platform" : self.platform_button,
+            "Solutions" : self.solutions_button,
+            "Resources" : self.resources_button,
+            "Open Source" : self.open_source_button,
+            "Enterprise" : self.enterprise_button
+        }
+
+
+    def get_menu_locator(self, menu_name: str) -> Locator:
+        locator = self._locator_registry.get(menu_name)
+        if locator is None:
+            raise ValueError(f"Menu '{menu_name}' not found. Available: {list(self._locator_registry.keys())}")
+        return locator
 
     def _get_active_dropdown(self, menu_button: Locator) -> Locator:
         """Helper to return the container element relative to the hovered button."""
@@ -155,3 +173,6 @@ class GuestHeaderComponent:
         dropdown_container = self._get_active_dropdown(menu_button)
         raw_titles = dropdown_container.get_by_role("link").all_text_contents()
         return [title.replace("New", "").strip() for title in raw_titles if title.strip()]
+
+    def open_search(self):
+        self.search_trigger_button.click()

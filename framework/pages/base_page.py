@@ -12,7 +12,7 @@ class BasePage:
 
     def navigate(self, url : str | None = None) -> None:
         """Navigates to a URL. If no URL is provided, it falls back to the page's default PAGE_PATH."""
-        target_url = url or f"{self.BASE_URL}{self.PAGE_PATH}"
+        target_url = url if url is not None else f"{self.BASE_URL}{self.PAGE_PATH}"
         self.page.goto(target_url, wait_until="domcontentloaded")
         self.wait_loaded()
 

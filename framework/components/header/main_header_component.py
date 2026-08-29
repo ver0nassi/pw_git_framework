@@ -3,6 +3,7 @@ from playwright.sync_api import Page
 from framework.components.header.main_menu_component import MainMenuComponent
 from framework.components.header.user_menu_component import UserMenuComponent
 
+
 class MainHeaderComponent:
     def __init__(self, page: Page) -> None:
         self.page = page

@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import TypeAlias
-from playwright.sync_api import Page, Locator, expect
+
+from playwright.sync_api import Locator, Page, expect
+
 
 # Enums namespace
 class GuestFooterLinks:
@@ -75,7 +77,7 @@ class GuestFooterLinks:
         X = "Github on X"
         TIKTOK = "Github on TikTok"
         TWITCH = "Github on Twitch"
-        GITHUB = "GitHub's organization on GitHub"
+        GITHUB = "GitHub’s organization on GitHub"
 
 # Type aliases
 MarketingFooterLink: TypeAlias = (
@@ -94,8 +96,8 @@ class GuestFooterComponent:
         # --- Footer ---
         self._footer= page.locator("footer")
         # --- Marketing Footer ---
-        self._marketing_footer = self._footer.locator(".MarketingFooter-module")
-        self._newsletter_container = self._marketing_footer.locator(".Newsletter-module")
+        self._marketing_footer = self._footer.locator('[class^="MarketingFooter-module_"]')
+        self._newsletter_container = self._footer.get_by_role("region", name="THE DEVELOPER NEWSLETTER")
         # --- Sub Footer ---
         self._sub_footer_container = self._footer.locator(".SubFooter-module")
         self._legal_container = self._footer.get_by_role("navigation", name="Legal and Resource Links")
