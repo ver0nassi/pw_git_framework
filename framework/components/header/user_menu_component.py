@@ -1,8 +1,8 @@
 from playwright.sync_api import Page, expect
 
+
 class UserMenuComponent:
     def __init__(self, page: Page):
-        self.page = page
 
         self._container = page.get_by_role("dialog", name="User navigation")
 

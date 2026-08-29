@@ -128,7 +128,7 @@ class GuestHeaderComponent:
         self.pricing_button = self._global_nav.get_by_role("button", name="Pricing")
 
         # --- Actions ---
-        self.search_trigger_button = page.get_by_role("button", name="Search or jump to…")
+        self.search_trigger_button = page.get_by_role("button", name="Search or jump to")
         self.sign_in_link = page.get_by_role("link", name="Sign in", exact=True)
         self.sign_up_link = page.get_by_role("link", name="Sign up", exact=True)
 
@@ -173,3 +173,6 @@ class GuestHeaderComponent:
         dropdown_container = self._get_active_dropdown(menu_button)
         raw_titles = dropdown_container.get_by_role("link").all_text_contents()
         return [title.replace("New", "").strip() for title in raw_titles if title.strip()]
+
+    def open_search(self):
+        self.search_trigger_button.click()

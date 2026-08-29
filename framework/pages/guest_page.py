@@ -2,17 +2,19 @@ from playwright.sync_api import Page, expect
 
 from framework.components.footer.guest_footer import GuestFooterComponent
 from framework.components.header.guest_header import GuestHeaderComponent
+from framework.components.header.search_dialog_component import SearchDialogComponent
 from framework.pages.base_page import BasePage
 
 
 class GuestPage(BasePage):
     PAGE_PATH: str = "/"
-    def __init__(self, page: Page):
+    def __init__(self, page: Page) -> None:
         super().__init__(page)
 
         # --- Common Global Components ---
         self.header : GuestHeaderComponent = GuestHeaderComponent(page)
         self.footer : GuestFooterComponent = GuestFooterComponent(page)
+        self.search_dialog : SearchDialogComponent = SearchDialogComponent(page)
 
         # --- Top banner items ---
         self.hero_heading = page.get_by_role("heading", name="The future of building happens together")
