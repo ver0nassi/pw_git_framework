@@ -1,8 +1,9 @@
-from framework.pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 
 from framework.components.footer.guest_login_footer import GuestLoginFooterComponent
+from framework.pages.base_page import BasePage
 from framework.pages.forgot_password_page import ForgotPasswordPage
+
 
 class LoginPage(BasePage):
     PAGE_PATH: str = "/login"
@@ -22,6 +23,7 @@ class LoginPage(BasePage):
 
         self.create_account_link = page.get_by_role("link", name="Create an account")
         self.sign_in_with_passkey_button = page.get_by_role("button", name="Sign in with a passkey")
+        self.sign_in_with_passkey_waiting_message = page.get_by_role("paragraph", name="Waiting for input from browser interaction...")
 
     def assert_loaded(self):
         expect(self.heading).to_be_visible()
