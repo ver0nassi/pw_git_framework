@@ -1,7 +1,8 @@
-from framework.pages.base_page import BasePage
-from framework.components.footer.guest_login_footer import GuestLoginFooterComponent
+from playwright.sync_api import Page, expect
 
-from playwright.sync_api import Page
+from framework.components.footer.guest_login_footer import GuestLoginFooterComponent
+from framework.pages.base_page import BasePage
+
 
 class ForgotPasswordPage(BasePage):
     PAGE_PATH : str = "/password_reset"
@@ -15,6 +16,12 @@ class ForgotPasswordPage(BasePage):
         self.paragraph = self._main.get_by_role("paragraph")
         self.email_input = self._main.get_by_role("textbox", name="Email")
         self.send_password_button = self._main.get_by_role("button", name="Send password reset email")
+
+    def assert_loaded(self) -> None:
+        expect(self.heading).to_be_visible()
+        expect(self.email_input).to_be_visible()
+        expect(self.send_password_button).to_be_visible()
+
 
     def enter_email(self, email: str) -> None:
         self.email_input.fill(email)
