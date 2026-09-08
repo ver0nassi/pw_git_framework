@@ -1,4 +1,5 @@
-from playwright.sync_api import Page, Locator, expect
+from playwright.sync_api import Locator, Page, expect
+
 
 class FlashAlertComponent:
     """Universal alert component to use in multiple pages"""
@@ -14,3 +15,7 @@ class FlashAlertComponent:
     def assert_message(self, message: str) -> None:
         """Assert that the flash alert contains the expected message."""
         expect(self._alert).to_contain_text(message)
+
+    def get_link_by_text(self, text) -> Locator:
+        """Return the alert link with the specified accessible name."""
+        return self._alert.get_by_role("link", name=text)
