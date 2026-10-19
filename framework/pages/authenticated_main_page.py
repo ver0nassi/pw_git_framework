@@ -4,6 +4,7 @@ from framework.components.header.main_header_component import MainHeaderComponen
 from framework.components.header.main_menu_component import MainMenuComponent
 from framework.components.header.user_menu_component import UserMenuComponent
 from framework.components.home.changelog_component import ChangelogComponent
+from framework.components.home.dashboard_component import DashboardComponent
 from framework.components.home.feed_component import FeedItemComponent
 from framework.components.home.repository_sidebar_component import (
     RepositorySidebarComponent,
@@ -22,5 +23,6 @@ class AuthenticatedMainPage(BasePage):
         self.feed: FeedItemComponent = FeedItemComponent(page)
         self.changelog: ChangelogComponent = ChangelogComponent(page)
         self.repository_sidebar: RepositorySidebarComponent = RepositorySidebarComponent(page)
+        self.dashboard: DashboardComponent = DashboardComponent(page)
 
 

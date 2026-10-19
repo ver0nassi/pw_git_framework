@@ -75,7 +75,7 @@ def test_login_with_apple_account_redirects_to_apple(page):
     login_page.continue_with_apple_button.click()
     page.wait_for_url("**/appleid.apple.com/**", timeout=10000)
     current_url = page.url
-    assert "/auth/authorize" in current_url
+    assert "/auth_setup/authorize" in current_url
 
 @pytest.mark.security
 def test_login_page_uses_https_only(page):

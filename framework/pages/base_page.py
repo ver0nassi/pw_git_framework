@@ -29,7 +29,6 @@ class BasePage:
         locator.wait_for(state="visible")
 
     def wait_loaded(self) -> None:
-        #TODO
         pass
 
     def locator(self):

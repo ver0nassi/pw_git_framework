@@ -18,3 +18,12 @@ class DashboardComponent(BaseComponent):
         self.write_code_button = self._container.get_by_role("button", name="Write code")
         self.git_button = self._container.get_by_role("button", name="Git")
         self.pull_requests_button = self._container.get_by_role("button", name="Pull requests")
+
+    def assert_loaded(self) -> None:
+        expect(self.debug_button).to_be_visible()
+        expect(self.agent_button).to_be_visible()
+        expect(self.create_issue_button).to_be_visible()
+        expect(self.write_code_button).to_be_visible()
+        expect(self.git_button).to_be_visible()
+        expect(self.pull_requests_button).to_be_visible()
+

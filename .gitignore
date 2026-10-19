@@ -1,3 +1,6 @@
 venv/
 .idea/
 __pycache__/
+framework/.auth/
+*.state.json
+.pytest_cache/
