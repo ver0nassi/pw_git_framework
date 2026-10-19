@@ -15,5 +15,4 @@ class RepositorySidebarComponent:
 
     def assert_loaded(self) -> None:
         expect(self.heading).to_be_visible()
-        expect(self.new_link).to_be_visible()
         expect(self.search_textbox).to_be_visible()

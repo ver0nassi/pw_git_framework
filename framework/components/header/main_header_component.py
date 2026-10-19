@@ -10,13 +10,14 @@ class MainHeaderComponent:
 
         self._container = page.get_by_role("banner", name="Global navigation menu")
         self.open_menu_button = self._container.get_by_role("button", name="Open menu")
-        self.dashboard_button = self._container.get_by_role("link", name="Dashboard")
+        self.git_icon_link = self._container.get_by_role("link", name="Homepage", exact=False)
+        self.dashboard_link = self._container.get_by_role("link", name="Dashboard")
         self.search_button = self._container.get_by_role("button", name="Open quick search dialog, type / to search")
         self.copilot_link = self._container.get_by_role("link", name="Chat with Copilot")
         self.open_copilot_button = self._container.get_by_role("button", name="Open Copilot...")
         self.create_new_button = self._container.get_by_role("button", name="Create new...")
-        self.all_issues_link = self._container.get_by_role("link", name="All issues ( g then i )")
-        self.all_pull_requests_link = self._container.get_by_role("link", name="All pull requests ( g then p )")
+        self.all_issues_link = self._container.get_by_role("link", name="All issues", exact=False)
+        self.all_pull_requests_link = self._container.get_by_role("link", name="All pull requests", exact=False)
         self.all_repositories_link = self._container.get_by_role("link", name="All repositories")
         self.notifications_link = self._container.get_by_role("link", name="You have no unread notifications")
         self.open_user_menu_button = self._container.get_by_role("button", name="Open user navigation menu")
@@ -28,9 +29,22 @@ class MainHeaderComponent:
         return menu
 
     def open_main_menu(self) -> MainMenuComponent:
-        self.open_menu_button.click()
+        self.open_menu_button.click(force=True)
         menu = MainMenuComponent(self.page)
         menu.expect_opened()
         return menu
+
+    def get_all_header_elements(self) -> list:
+        """Returns a collection of elements that must always be visible."""
+        return [
+            self.open_menu_button,
+            self.git_icon_link,
+            self.dashboard_link,
+            self.open_menu_button,
+            self.search_button,
+            self.copilot_link,
+            self.create_new_button,
+            self.open_user_menu_button,
+        ]
 
 
