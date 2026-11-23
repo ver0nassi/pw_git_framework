@@ -19,7 +19,7 @@ class MainHeaderComponent:
         self.all_issues_link = self._container.get_by_role("link", name="All issues", exact=False)
         self.all_pull_requests_link = self._container.get_by_role("link", name="All pull requests", exact=False)
         self.all_repositories_link = self._container.get_by_role("link", name="All repositories")
-        self.notifications_link = self._container.get_by_role("link", name="You have no unread notifications")
+        self.notifications_link = self._container.locator('a[href="/notifications"]')
         self.open_user_menu_button = self._container.get_by_role("button", name="Open user navigation menu")
 
     def open_user_menu(self) -> UserMenuComponent:
@@ -40,7 +40,6 @@ class MainHeaderComponent:
             self.open_menu_button,
             self.git_icon_link,
             self.dashboard_link,
-            self.open_menu_button,
             self.search_button,
             self.copilot_link,
             self.create_new_button,

@@ -33,3 +33,12 @@ Repository = "https://github.com/<your-github-username>/pw-git-framework"
 
 [tool.setuptools.packages.find]
 where = ["."]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+markers = [
+    "smoke: critical tests for basic application health",
+    "regression: broader functional regression coverage",
+]

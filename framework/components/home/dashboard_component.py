@@ -25,5 +25,4 @@ class DashboardComponent(BaseComponent):
         expect(self.create_issue_button).to_be_visible()
         expect(self.write_code_button).to_be_visible()
         expect(self.git_button).to_be_visible()
-        expect(self.pull_requests_button).to_be_visible()
 

@@ -7,6 +7,8 @@ from framework.auth_setup.paths import GITHUB_STATE
 from framework.browser.browser_manager import BrowserManager
 from framework.browser.config import BrowserConfig, ContextConfig, ViewportSize
 
+from framework.pages.authenticated_main_page import AuthenticatedMainPage
+
 
 @pytest.fixture(scope="session")
 def auth_state_path() -> str:
@@ -79,3 +81,9 @@ def authenticated_page(authenticated_context: BrowserContext) -> Iterator[Page]:
         yield page
     finally:
         page.close()
+
+@pytest.fixture(scope="function")
+def authenticated_main_page(authenticated_page):
+    main_page = AuthenticatedMainPage(authenticated_page)
+    main_page.navigate()
+    return main_page

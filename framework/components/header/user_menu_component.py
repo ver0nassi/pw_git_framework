@@ -2,7 +2,7 @@ from playwright.sync_api import Page, expect
 
 
 class UserMenuComponent:
-    def __init__(self, page: Page):
+    def __init__(self, page: Page) -> None:
 
         self._container = page.get_by_role("dialog", name="User navigation")
 
@@ -29,6 +29,7 @@ class UserMenuComponent:
 
     def expect_opened(self) -> None:
         expect(self._container).to_be_visible()
+        expect(self.sign_out_link).to_be_visible()
 
     def expect_username(self, username: str) -> None:
         expect(self._container.get_by_role("heading", name=username)).to_be_visible()
