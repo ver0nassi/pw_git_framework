@@ -23,6 +23,7 @@ class MainMenuComponent:
         self.top_repositories_heading = self._container.get_by_role("heading", name="Top repositories")
         self.search_for_repositories_button = self._container.get_by_role("button", name="Search for repositories")
         self.search_for_repositories_textbox = self._container.get_by_role("textbox", name="Search for repositories")
+        self.search_repository_dynamic_item = self._container.get_by_test_id("dynamic-side-panel-items-item")
 
     def expect_opened(self) -> None:
         expect(self._container).to_be_visible()
@@ -33,11 +34,29 @@ class MainMenuComponent:
     def expect_closed(self) -> None:
         expect(self._container).not_to_be_visible()
 
-    def repo_link(self, name: str) -> Locator:
-        """Return the repository link matching the provided repository name in username/reponame format."""
-        return self._container.get_by_role("link", name=name)
+    def repository_link(self, full_name: str) -> Locator:
+        """Return the repository link matching its full name (owner/repository)."""
+        return self._container.get_by_role("link", name=full_name, exact=True)
 
-    def search_repository(self, name: str) -> Locator:
+    def search_repository(self, query: str) -> None:
         self.search_for_repositories_button.click()
-        self.search_for_repositories_textbox.fill(name)
-        return self.repo_link(name)
+        self.search_for_repositories_textbox.fill(query)
+        expect(self.search_repository_dynamic_item).to_be_visible()
+
+    def get_all_elements(self) -> list[Locator]:
+        return [
+            self.close_menu_button,
+            self.home_link,
+            self.all_issues_link,
+            self.all_pull_requests_link,
+            self.all_repositories_link,
+            self.projects_link,
+            self.discussions_link,
+            self.codespaces_link,
+            self.copilot_link,
+            self.explore_link,
+            self.marketplace_link,
+            self.mcp_registry_link,
+            self.top_repositories_heading,
+            self.search_for_repositories_button,
+        ]

@@ -24,5 +24,3 @@ class AuthenticatedMainPage(BasePage):
         self.changelog: ChangelogComponent = ChangelogComponent(page)
         self.repository_sidebar: RepositorySidebarComponent = RepositorySidebarComponent(page)
         self.dashboard: DashboardComponent = DashboardComponent(page)
-
-
